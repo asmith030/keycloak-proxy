@@ -33,7 +33,7 @@ func TestRedirectToAuthorization(t *testing.T) {
 			URI:              "/admin",
 			Redirects:        true,
 			ExpectedLocation: "/oauth/authorize?state=L2FkbWlu",
-			ExpectedCode:     http.StatusTemporaryRedirect,
+			ExpectedCode:     http.StatusSeeOther,
 		},
 	}
 	newFakeProxy(nil).RunTests(t, requests)

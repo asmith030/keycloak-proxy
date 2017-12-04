@@ -313,7 +313,7 @@ func TestOauthRequests(t *testing.T) {
 		{
 			URI:          "/oauth/authorize",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{
 			URI:          "/oauth/callback",
@@ -438,22 +438,22 @@ func TestNoProxyingRequests(t *testing.T) {
 		{ // check for escaping
 			URI:          "/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/etc/passwd",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for escaping
 			URI:          "/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/.%2e/",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for escaping
 			URI:          "/../%2e",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for escaping
 			URI:          "",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 	}
 	newFakeProxy(c).RunTests(t, requests)
@@ -472,27 +472,27 @@ func TestStrangeAdminRequests(t *testing.T) {
 		{ // check for escaping
 			URI:          "//admin%2Ftest",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for escaping
 			URI:          "///admin/../admin//%2Ftest",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for escaping
 			URI:          "/admin%2Ftest",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for prefix slashs
 			URI:          "//admin/test",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for double slashs
 			URI:          "/admin//test",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for double slashs no redirects
 			URI:          "/admin//test",
@@ -503,7 +503,7 @@ func TestStrangeAdminRequests(t *testing.T) {
 		{ // check for dodgy url
 			URI:          "//admin/../admin/test",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check for it works
 			URI:           "//admin/test",
@@ -620,7 +620,7 @@ func TestRolePermissionsMiddleware(t *testing.T) {
 		{ // check for redirect
 			URI:          "/",
 			Redirects:    true,
-			ExpectedCode: http.StatusTemporaryRedirect,
+			ExpectedCode: http.StatusSeeOther,
 		},
 		{ // check with a token but not test role
 			URI:          "/",
